@@ -2,23 +2,50 @@
 
 Tree-sitter language parsers wrapped as Swift packages for use with the tree-sitter C API.
 
-## Supported Languages
+[![CI](https://github.com/blaineam/TreeSitterLanguages/actions/workflows/ci.yml/badge.svg)](https://github.com/blaineam/TreeSitterLanguages/actions/workflows/ci.yml)
 
-- Bash
-- C
-- C++
-- CSS
-- Go
-- HTML
-- JavaScript
-- JSON
-- Markdown
-- Python
-- Ruby
-- Rust
-- Swift
-- TypeScript
-- YAML
+## Supported Languages (38 total)
+
+| Language | Parser | Queries |
+|----------|--------|---------|
+| Astro | TreeSitterAstro | TreeSitterAstroQueries |
+| Bash | TreeSitterBash | TreeSitterBashQueries |
+| C | TreeSitterC | TreeSitterCQueries |
+| C++ | TreeSitterCPP | TreeSitterCPPQueries |
+| C# | TreeSitterCSharp | TreeSitterCSharpQueries |
+| Comment | TreeSitterComment | TreeSitterCommentQueries |
+| CSS | TreeSitterCSS | TreeSitterCSSQueries |
+| Elixir | TreeSitterElixir | TreeSitterElixirQueries |
+| Elm | TreeSitterElm | TreeSitterElmQueries |
+| Go | TreeSitterGo | TreeSitterGoQueries |
+| Haskell | TreeSitterHaskell | TreeSitterHaskellQueries |
+| HTML | TreeSitterHTML | TreeSitterHTMLQueries |
+| Java | TreeSitterJava | TreeSitterJavaQueries |
+| JavaScript | TreeSitterJavaScript | TreeSitterJavaScriptQueries |
+| JSDoc | TreeSitterJSDoc | TreeSitterJSDocQueries |
+| JSON | TreeSitterJSON | TreeSitterJSONQueries |
+| JSON5 | TreeSitterJSON5 | TreeSitterJSON5Queries |
+| Julia | TreeSitterJulia | TreeSitterJuliaQueries |
+| LaTeX | TreeSitterLaTeX | TreeSitterLaTeXQueries |
+| Lua | TreeSitterLua | TreeSitterLuaQueries |
+| Markdown | TreeSitterMarkdown | TreeSitterMarkdownQueries |
+| Markdown (Inline) | TreeSitterMarkdownInline | TreeSitterMarkdownInlineQueries |
+| OCaml | TreeSitterOCaml | TreeSitterOCamlQueries |
+| Perl | TreeSitterPerl | TreeSitterPerlQueries |
+| PHP | TreeSitterPHP | TreeSitterPHPQueries |
+| Python | TreeSitterPython | TreeSitterPythonQueries |
+| R | TreeSitterR | TreeSitterRQueries |
+| Regex | TreeSitterRegex | TreeSitterRegexQueries |
+| Ruby | TreeSitterRuby | TreeSitterRubyQueries |
+| Rust | TreeSitterRust | TreeSitterRustQueries |
+| SCSS | TreeSitterSCSS | TreeSitterSCSSQueries |
+| SQL | TreeSitterSQL | TreeSitterSQLQueries |
+| Svelte | TreeSitterSvelte | TreeSitterSvelteQueries |
+| Swift | TreeSitterSwift | TreeSitterSwiftQueries |
+| TOML | TreeSitterTOML | TreeSitterTOMLQueries |
+| TSX | TreeSitterTSX | TreeSitterTSXQueries |
+| TypeScript | TreeSitterTypeScript | TreeSitterTypeScriptQueries |
+| YAML | TreeSitterYAML | TreeSitterYAMLQueries |
 
 ## Installation
 
@@ -26,7 +53,7 @@ Add this package to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/blaineam/TreeSitterLanguages", branch: "main"),
+    .package(url: "https://github.com/blaineam/TreeSitterLanguages", from: "2.0.0"),
 ]
 ```
 
@@ -37,8 +64,10 @@ Then add the language parsers you need as dependencies:
     name: "YourTarget",
     dependencies: [
         .product(name: "TreeSitterSwift", package: "TreeSitterLanguages"),
+        .product(name: "TreeSitterSwiftQueries", package: "TreeSitterLanguages"),
         .product(name: "TreeSitterPython", package: "TreeSitterLanguages"),
-        // etc.
+        .product(name: "TreeSitterPythonQueries", package: "TreeSitterLanguages"),
+        // Add more languages as needed
     ]
 )
 ```
@@ -53,25 +82,26 @@ import TreeSitterSwift
 let language = tree_sitter_swift()
 ```
 
+Each query module provides bundled `.scm` query files for syntax highlighting and other features:
+
+```swift
+import TreeSitterSwiftQueries
+
+// Access highlight queries from the bundle
+if let url = Bundle.module.url(forResource: "highlights", withExtension: "scm") {
+    let query = try String(contentsOf: url)
+}
+```
+
+## Requirements
+
+- iOS 14.0+
+- macOS 11.0+
+- Swift 5.9+
+
 ## Acknowledgements
 
-This package contains parser code from the following tree-sitter grammar repositories:
-
-- [tree-sitter-bash](https://github.com/tree-sitter/tree-sitter-bash)
-- [tree-sitter-c](https://github.com/tree-sitter/tree-sitter-c)
-- [tree-sitter-cpp](https://github.com/tree-sitter/tree-sitter-cpp)
-- [tree-sitter-css](https://github.com/tree-sitter/tree-sitter-css)
-- [tree-sitter-go](https://github.com/tree-sitter/tree-sitter-go)
-- [tree-sitter-html](https://github.com/tree-sitter/tree-sitter-html)
-- [tree-sitter-javascript](https://github.com/tree-sitter/tree-sitter-javascript)
-- [tree-sitter-json](https://github.com/tree-sitter/tree-sitter-json)
-- [tree-sitter-markdown](https://github.com/MDeiml/tree-sitter-markdown)
-- [tree-sitter-python](https://github.com/tree-sitter/tree-sitter-python)
-- [tree-sitter-ruby](https://github.com/tree-sitter/tree-sitter-ruby)
-- [tree-sitter-rust](https://github.com/tree-sitter/tree-sitter-rust)
-- [tree-sitter-swift](https://github.com/alex-pinkus/tree-sitter-swift)
-- [tree-sitter-typescript](https://github.com/tree-sitter/tree-sitter-typescript)
-- [tree-sitter-yaml](https://github.com/ikatyang/tree-sitter-yaml)
+This package contains parser code from various tree-sitter grammar repositories. See individual language directories for specific attributions.
 
 Originally forked from [simonbs/TreeSitterLanguages](https://github.com/simonbs/TreeSitterLanguages).
 
